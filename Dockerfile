@@ -15,7 +15,7 @@ EXPOSE 80
 
 # Copy the nginx conf to sites-enabled
 RUN rm -rf /etc/nginx/conf.d/* \
-    && cp /app/nginx/react.conf /etc/nginx/conf.d/
+    && cp ./react.conf /etc/nginx/conf.d/
 
 # replicate www directory
 RUN cp /app/dist /var/www/
