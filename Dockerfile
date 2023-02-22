@@ -1,11 +1,4 @@
-FROM node:11-alpine
-
-# install nginx
-RUN apk add nginx
-
-# create the nginx pid directory
-RUN mkdir -p /run/nginx \
-    && chown -R nginx:nginx /run/nginx
+FROM node:14
 
 WORKDIR /app
 
@@ -15,7 +8,15 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 80
+RUN npm run build
+
+FROM nginx:1.19
+
+COPY --from=0 /app/build /usr/share/nginx/html
+# create the nginx pid directory
+RUN mkdir -p /run/nginx \
+    && chown -R nginx:nginx /run/nginx
+
 
 # Copy the nginx conf to sites-enabled
 RUN rm -rf /etc/nginx/conf.d/* \
@@ -23,5 +24,9 @@ RUN rm -rf /etc/nginx/conf.d/* \
 
 # replicate www directory
 RUN cp -r ./public /var/www/
+
+
+EXPOSE 80
+
 
 CMD ["nginx", "-g", "daemon off;"]
