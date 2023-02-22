@@ -20,7 +20,7 @@ RUN mkdir -p /run/nginx \
 
 # Copy the nginx conf to sites-enabled
 RUN rm -rf /etc/nginx/conf.d/* \
-    && cp ./react.conf /etc/nginx/conf.d/
+    && cp react.conf /etc/nginx/conf.d/
 
 # replicate www directory
 RUN cp -r ./public /var/www/
