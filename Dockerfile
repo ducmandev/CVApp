@@ -9,7 +9,8 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . . 
+COPY . .
+
 EXPOSE 80
 
 # Copy the nginx conf to sites-enabled
